@@ -1,0 +1,22 @@
+name: Pull request check 😬😬
+
+on:
+    pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 20.x.x
+        cache: yarn
+    - name: Install dependencies
+      run: yarn --immutable
+    - name: Lint
+      run: yarn lint
+    - name: Lint Types
+      run: yarn lint:types
+    - name: Test
+      run: yarn test

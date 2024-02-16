@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:types": "tsc --noEmit",
     "test": "jest",
-    "e2e": "playwright test",
+    "test:e2e": "playwright test",
     "prettier": "prettier -w ."
   },
   "dependencies": {
