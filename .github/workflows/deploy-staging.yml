@@ -36,3 +36,29 @@ jobs:
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           proxy_fingerprint: ${{ secrets.STAGING_SSH_FINGERPRINT }}
           script: source ~/.nvm/nvm.sh; ~/deploy.sh
+  e2e:
+    needs: deploy
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x.x
+          cache: yarn
+      - name: Install dependencies
+        run: yarn --immutable
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          TEST_ENV_BASE_URL: https://staging.velenyx.tech
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
