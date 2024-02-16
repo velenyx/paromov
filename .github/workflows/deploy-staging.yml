@@ -55,7 +55,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          TEST_ENV_BASE_URL: https://staging.velenyx.tech
+          TEXT_ENV_BASE_URL: https://staging.velenyx.tech
       - uses: actions/upload-artifact@v3
         if: always()
         with:
