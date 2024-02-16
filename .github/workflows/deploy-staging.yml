@@ -1,0 +1,38 @@
+name: deploy staging 🛫🧪
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x.x
+          cache: yarn
+      - run: yarn --immutable
+      - run: yarn lint
+      - run: yarn lint:types
+      - run: yarn test
+  deploy:
+    needs: lint
+    runs-on: ubuntu-latest
+    concurrency:
+      group: staging
+      cancel-in-progress: true
+    steps:
+      - name: SSH Command
+        uses: D3rHase/ssh-command-action@v0.2.2
+        with:
+          # hostname | IP of the server
+          host: ${{ secrets.STAGING_SSH_HOST }}
+          user: ${{ secrets.STAGING_SSH_USERNAME }}
+          private_key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          host_fingerprint: ${{ secrets.STAGING_SSH_FINGERPRINT }}
+          command: source ~/.nvm/nvm.sh; echo 'Hello world!d'
