@@ -35,4 +35,4 @@ jobs:
           username: ${{ secrets.STAGING_SSH_USERNAME }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           proxy_fingerprint: ${{ secrets.STAGING_SSH_FINGERPRINT }}
-          script: source ~/.nvm/nvm.sh; echo 'Hello world!d'
+          script: source ~/.nvm/nvm.sh; ~/deploy.sh
