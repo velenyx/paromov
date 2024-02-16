@@ -49,7 +49,7 @@ export const CreateCourseForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn(className, "space-y-8")}
+        className={cn(className, "space-y-4")}
       >
         <FormField
           control={form.control}
@@ -77,7 +77,7 @@ export const CreateCourseForm = ({
             </FormItem>
           )}
         />
-        <Button disabled={isCreateTransition} type="submit">
+        <Button className="mt-8" disabled={isCreateTransition} type="submit">
           Добавить
         </Button>
       </form>
