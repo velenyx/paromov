@@ -28,11 +28,11 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: SSH Command
-        uses: D3rHase/ssh-command-action@v0.2.2
+        uses: appleboy/ssh-action@v1.0.3
         with:
           # hostname | IP of the server
           host: ${{ secrets.STAGING_SSH_HOST }}
-          user: ${{ secrets.STAGING_SSH_USERNAME }}
-          private_key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-          host_fingerprint: ${{ secrets.STAGING_SSH_FINGERPRINT }}
-          command: source ~/.nvm/nvm.sh; echo 'Hello world!d'
+          username: ${{ secrets.STAGING_SSH_USERNAME }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          proxy_fingerprint: ${{ secrets.STAGING_SSH_FINGERPRINT }}
+          script: source ~/.nvm/nvm.sh; echo 'Hello world!d'
