@@ -2,8 +2,8 @@
 
 import { signIn } from "next-auth/react";
 import { useEffect } from "react";
-import { useAppSession } from "@/entities/user/session.client";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
+import { useAppSession } from "@/entities/user/_vm/use-app-session";
 
 export const AuthorizedGuard = ({
   children,
