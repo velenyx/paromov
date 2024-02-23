@@ -2,6 +2,8 @@
 
 import { Spinner } from "@/shared/ui/spinner";
 import { ProfileForm } from "./_ui/profile-form";
+import { useQuery } from "@tanstack/react-query";
+import { getProfileQuery } from "@/entities/user/profile";
 
 export const UpdateProfileForm = ({
   userId,
@@ -10,13 +12,22 @@ export const UpdateProfileForm = ({
   userId: string;
   callbackUrl?: string;
 }) => {
-  if (false) {
+  const profileQuery = useQuery({
+    ...getProfileQuery(userId),
+  });
+
+  if (profileQuery.isPending) {
     return <Spinner aria-label="Загрузка профиля" />;
   }
 
-  if (false) {
+  if (!profileQuery.data) {
     return <div>Не удалось загрузить профиль, возможно у вас нет прав</div>;
   }
 
-  return <ProfileForm submitText={callbackUrl ? "Продолжить" : "Сохранить"} />;
+  return (
+    <ProfileForm
+      profile={profileQuery.data.profile}
+      submitText={callbackUrl ? "Продолжить" : "Сохранить"}
+    />
+  );
 };
