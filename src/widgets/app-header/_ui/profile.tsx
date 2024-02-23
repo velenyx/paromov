@@ -10,13 +10,13 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Button } from "@/shared/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import Link from "next/link";
 import { LogOut, User } from "lucide-react";
 import { useSignOut } from "@/features/auth/use-sign-out";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { SignInButton } from "@/features/auth/sign-in-button";
-import { useAppSession } from "@/entities/session/use-app-session";
+import { getProfileDisplayName, ProfileAvatar } from "@/entities/user/profile";
+import { useAppSession } from "@/entities/user/_vm/use-app-session";
 
 export const Profile = () => {
   const session = useAppSession();
@@ -30,6 +30,8 @@ export const Profile = () => {
     return <SignInButton />;
   }
 
+  const user = session.data?.user;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,17 +39,14 @@ export const Profile = () => {
           variant="ghost"
           className="p-px rounded-full self-center h-8 w-8"
         >
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={session.data?.user.image} />
-            <AvatarFallback>AC</AvatarFallback>
-          </Avatar>
+          <ProfileAvatar profile={user} className="w-8 h-8" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-2">
         <DropdownMenuLabel>
           <p>Мой аккаунт</p>
           <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">
-            {session.data?.user?.name}
+            {user ? getProfileDisplayName(user) : undefined}
           </p>
         </DropdownMenuLabel>
         <DropdownMenuGroup></DropdownMenuGroup>
