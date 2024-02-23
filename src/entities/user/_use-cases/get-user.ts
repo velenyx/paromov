@@ -1,6 +1,6 @@
 import { SessionEntity, UserEntity, UserId } from "../_domain/types";
-import { userRepository } from "@/entities/user/_repositories/user.repository";
-import { createUserAbility } from "@/entities/user/_domain/user-ability";
+import { userRepository } from "@/entities/user/_repositories/user";
+import { createUserAbility } from "@/entities/user/_domain/ability";
 import { AuthorizationError } from "@/shared/lib/errors";
 
 type GetUser = {
