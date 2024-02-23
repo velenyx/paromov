@@ -16,7 +16,7 @@ import { LogOut, User } from "lucide-react";
 import { useSignOut } from "@/features/auth/use-sign-out";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { SignInButton } from "@/features/auth/sign-in-button";
-import { useAppSession } from "@/entities/session/use-app-session";
+import { useAppSession } from "@/entities/user/session.client";
 
 export const Profile = () => {
   const session = useAppSession();
@@ -38,7 +38,7 @@ export const Profile = () => {
           className="p-px rounded-full self-center h-8 w-8"
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage src={session.data?.user.image} />
+            <AvatarImage src={session.data?.user?.image ?? undefined} />
             <AvatarFallback>AC</AvatarFallback>
           </Avatar>
         </Button>

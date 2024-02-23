@@ -45,8 +45,9 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
+  email         String    @unique
+  role          ROLE      @default(USER)
   name          String?
-  email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -59,4 +60,9 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum ROLE {
+  USER
+  ADMIN
 }
