@@ -4,13 +4,17 @@ import { ProfileAvatar } from "@/entities/user/profile";
 import { useUploadAvatar } from "@/features/update-profile/_vm/use-upload-avatar";
 
 export const AvatarField = ({
+  email,
   value,
   onChange,
 }: {
+  email: string;
   value?: string;
   onChange: (value?: string) => void;
 }) => {
-  const uploadAvatar = useUploadAvatar({});
+  const uploadAvatar = useUploadAvatar({
+    onSuccess: onChange,
+  });
 
   return (
     <Button
@@ -26,7 +30,7 @@ export const AvatarField = ({
       )}
       <ProfileAvatar
         className="h-full w-full"
-        profile={{ email: "dmitriysivritkin@gmail.com", image: value }}
+        profile={{ email, image: value }}
       />
     </Button>
   );

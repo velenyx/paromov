@@ -1,8 +1,10 @@
 "use client";
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { Button } from "@/shared/ui/button";
 import {
   Form,
   FormControl,
@@ -11,10 +13,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form";
-import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { AvatarField } from "./avatar-field";
-import { Input } from "@/shared/ui/input";
 import { Profile } from "@/entities/user/profile";
 import { UserId } from "@/entities/user/user";
 import { useUpdateProfile } from "../_vm/use-update-profile";
@@ -22,7 +23,9 @@ import { useUpdateProfile } from "../_vm/use-update-profile";
 const profileFormSchema = z.object({
   name: z
     .string()
-    .max(30, { message: "Username must not be longer than 30 characters" })
+    .max(30, {
+      message: "Username must not be longer than 30 characters.",
+    })
     .transform((name) => name.trim())
     .optional(),
   email: z.string().email().optional(),
@@ -31,23 +34,23 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-const getDefaultValues = (profile: Profile): ProfileFormValues => ({
+const getDefaultValues = (profile: Profile) => ({
   email: profile.email,
   image: profile.image ?? undefined,
   name: profile.name ?? "",
 });
 
-export const ProfileForm = ({
-  userId,
+export function ProfileForm({
   onSuccess,
-  profile,
   submitText = "Сохранить",
+  profile,
+  userId,
 }: {
   userId: UserId;
   profile: Profile;
   onSuccess?: () => void;
   submitText?: string;
-}) => {
+}) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: getDefaultValues(profile),
@@ -103,7 +106,11 @@ export const ProfileForm = ({
             <FormItem>
               <FormLabel>Аватарка</FormLabel>
               <FormControl>
-                <AvatarField value={field.value} onChange={field.onChange} />
+                <AvatarField
+                  email={profile.email}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -121,4 +128,4 @@ export const ProfileForm = ({
       </form>
     </Form>
   );
-};
+}
