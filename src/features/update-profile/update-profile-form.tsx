@@ -26,6 +26,7 @@ export const UpdateProfileForm = ({
 
   return (
     <ProfileForm
+      userId={userId}
       profile={profileQuery.data.profile}
       submitText={callbackUrl ? "Продолжить" : "Сохранить"}
     />
