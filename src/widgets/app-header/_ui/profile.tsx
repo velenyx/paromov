@@ -53,7 +53,7 @@ export const Profile = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/profile/1`}>
+            <Link href={`/profile/${user?.id}`}>
               <User className="w-4 h-4 mr-2" />
               <span>Профиль</span>
             </Link>
